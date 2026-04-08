@@ -17,13 +17,10 @@ export default defineNuxtConfig({
   pwa: {
     registerType: "autoUpdate",
 
-    devOptions: {
-      enabled: true,
-      type: "module",
-    },
-
     workbox: {
       globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+      navigateFallback: "/",
+      navigateFallbackDenylist: [/^\/api\//],
     },
 
     manifest: {
