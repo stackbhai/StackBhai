@@ -16,6 +16,11 @@ export default defineNuxtConfig({
   ],
   pwa: {
     registerType: "autoUpdate",
+
+    workbox: {
+      globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+    },
+
     manifest: {
       name: "My LMS",
       short_name: "LMS",
