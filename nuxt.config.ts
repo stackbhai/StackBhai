@@ -15,21 +15,22 @@ export default defineNuxtConfig({
     "@vite-pwa/nuxt",
   ],
   pwa: {
+    client: {
+      installPrompt: true,
+    },
     registerType: "autoUpdate",
-
     workbox: {
       globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
       navigateFallback: "/",
       navigateFallbackDenylist: [/^\/api\//],
     },
-
     manifest: {
       name: "My LMS",
       short_name: "LMS",
+      start_url: "/",
+      display: "standalone",
       theme_color: "#ffffff",
       background_color: "#ffffff",
-      display: "standalone",
-      start_url: "/",
       icons: [
         {
           src: "/icon.png",
