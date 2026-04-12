@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-vue-next";
+import { ref } from "vue";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -19,220 +19,444 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Button from "../ui/button/Button.vue";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowRight,
+  Search,
+  User,
+  Menu,
+  Home,
+  BookOpen,
+  Rss,
+  Globe,
+  Zap,
+  Flame,
+  Rocket,
+  Monitor,
+  Settings,
+  X,
+} from "lucide-vue-next";
+import { Badge } from "../ui/badge";
+
+const showAnnouncement = ref(true);
+
+const freeCourses = [
+  {
+    title: "HTML বেসিক থেকে অ্যাডভান্স",
+    description:
+      "ওয়েব ডেভেলপমেন্টের ভিত্তি গড়তে HTML শিখুন একদম শুরু থেকে।\nপ্র্যাকটিক্যাল উদাহরণের মাধ্যমে সহজেই শিখুন।",
+    href: "/courses/free-vuejs-tutorial-bangla",
+    icon: "hugeicons:html-5",
+    badge: null,
+  },
+  {
+    title: "CSS দিয়ে ডিজাইন মাস্টারি",
+    description:
+      "ওয়েবসাইটকে আকর্ষণীয় ও রেসপন্সিভ করতে step-by-step এবং modern UI design এর সবকিছু শিখে ফেলুন।",
+    href: "/courses/free-laravel-tutorial-bangla",
+    icon: "hugeicons:css-3",
+    badge: null,
+  },
+  {
+    title: "WordPress ওয়েবসাইট ডিজাইন",
+    description:
+      "কোনো কোডিং ছাড়াই সম্পূর্ণ প্রফেশনাল ওয়েবসাইট তৈরি করতে শিখুন। লাইভ প্রজেক্টের মাধ্যমে বাস্তব অভিজ্ঞতা অর্জন করুন।",
+    href: "/courses/free-wordpress-web-development-tutorial-bangla",
+    icon: "bi:wordpress",
+    badge: "জনপ্রিয়",
+  },
+];
+
+const liveCourses = [
+  {
+    title: "WordPress ওয়েব ডেভেলপমেন্ট",
+    description:
+      "লাইভ প্রজেক্টের মাধ্যমে শুরু থেকে সম্পূর্ণ ওয়েবসাইট তৈরি শিখুন step-by-step। মেন্টরশিপ, মার্কেটপ্লেস গাইডলাইন ও ক্লায়েন্ট হ্যান্ডলিং শিখে ইনকাম শুরু করুন।",
+    href: "/courses/wordpress-web-development",
+    icon: "cib:wordpress",
+    badge: "জনপ্রিয়",
+  },
+  {
+    title: "Vue.js দিয়ে ফ্রন্টএন্ড ডেভেলপমেন্ট",
+    description:
+      "লাইভ ক্লাসে Vue.js, Nuxt ও modern UI development শিখুন hands-on ভাবে। কোড রিভিউ, প্রজেক্ট ও কমিউনিটি সাপোর্ট সহ complete frontend Mastery।",
+    href: "/courses/frontend-web-development-with-vuejs",
+    icon: "simple-icons:nuxt",
+    badge: null,
+  },
+  {
+    title: "Full-Stack ওয়েব অ্যাপ ডেভেলপমেন্ট",
+    description:
+      "৬ মাসে complete roadmap অনুসরণ করে একজন ফুলস্ট্যাক ডেভেলপার হয়ে উঠুন। লাইভ প্রজেক্ট, Laravel + Vue Stack এবং real-world deployment শিখুন।",
+    href: "/courses/full-stack-web-app-development",
+    icon: "mdi:laravel",
+    badge: "প্রিমিয়াম",
+  },
+];
+
+const mobileNavSections = [
+  {
+    label: "মেনু",
+    items: [
+      { title: "হোম", href: "/", icon: "hugeicons:home-07" },
+      {
+        title: "প্রতিষ্ঠাতা সম্পর্কে",
+        href: "/about",
+        icon: "hugeicons:user-03",
+      },
+    ],
+  },
+  {
+    label: "ফ্রি কোর্স",
+    items: freeCourses,
+  },
+  {
+    label: "লাইভ কোর্স — প্রিমিয়াম",
+    items: liveCourses,
+  },
+];
 </script>
 
 <template>
-  <div
-    class="flex h-16 sticky top-0 z-50 bg-white items-center justify-between px-4"
-  >
-    <NuxtLink to="/" class="flex items-center space-x-2">
-      <NuxtImg src="/icon.png" class="w-8 h-8 sm:w-10 sm:w-10" />
-    </NuxtLink>
-
-    <!-- Desktop -->
-
-    <div class="hidden sm:block">
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuLink as-child :class="navigationMenuTriggerStyle()">
-              <NuxtLink to="/">হোম</NuxtLink>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>সকল কোর্স</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul
-                class="grid gap-2 md:w-[450px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]"
-              >
-                <li class="row-span-3">
-                  <NavigationMenuLink as-child>
-                    <NuxtLink
-                      class="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-4 no-underline outline-hidden select-none focus:shadow-md"
-                      to="/courses"
-                    >
-                      <div
-                        class="mt-4 text-lg font-medium flex items-center gap-2"
-                      >
-                        ফ্রি কোর্সগুলো দেখুন
-                        <Icon
-                          name="hugeicons:arrow-up-right-02"
-                          class="text-xl"
-                        />
-                      </div>
-                      <p class="text-muted-foreground text-xs leading-tight">
-                        আমাদের সকল ফ্রি কোর্স গুলো এক্সপ্লোর করুন। এবং প্রিমিয়াম
-                        সাপোর্টের জন্য আমাদের পেইড কোর্স দেখুন।
-                      </p>
-                    </NuxtLink>
-                  </NavigationMenuLink>
-                </li>
-                <NuxtLink
-                  to="/courses/free-wordpress-web-development-tutorial-bangla"
-                >
-                  <NavigationMenuLink>
-                    <h1 class="text-sm font-medium">
-                      WordPress Web Development
-                    </h1>
-                    <p class="text-muted-foreground text-xs leading-tight">
-                      ওয়ার্ডপ্রেস দিয়ে আধুনিক ও রেসপন্সিভ ওয়েবসাইট তৈরি শিখুন
-                      সম্পূর্ণ ফ্রিতে।
-                    </p>
-                  </NavigationMenuLink>
-                </NuxtLink>
-                <NuxtLink to="/courses/free-vuejs-tutorial-bangla">
-                  <NavigationMenuLink>
-                    <h1 class="text-sm font-medium">Vue.js Mastery</h1>
-                    <p class="text-muted-foreground text-xs leading-tight">
-                      ফ্রন্টএন্ডে Vue.js দিয়ে ডাইনামিক ও দ্রুতগতির ওয়েব অ্যাপ
-                      তৈরি করতে শিখুন।
-                    </p>
-                  </NavigationMenuLink>
-                </NuxtLink>
-                <NuxtLink to="/courses/free-laravel-tutorial-bangla">
-                  <NavigationMenuLink>
-                    <h1 class="text-sm font-medium">Laravel Mastery</h1>
-                    <p class="text-muted-foreground text-xs leading-tight">
-                      ব্যাকএন্ডের জন্য Laravel ব্যবহার করে শক্তিশালী ও স্কেলেবল
-                      ওয়েব অ্যাপ তৈরি করুন।
-                    </p>
-                  </NavigationMenuLink>
-                </NuxtLink>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>
-              <div class="flex flex-row gap-1.5 items-center justify-center">
-                <span class="relative flex size-3">
-                  <span
-                    class="absolute inline-flex h-full w-full animate-ping rounded-full bg-gray-400 opacity-75"
-                  ></span>
-                  <span
-                    class="relative inline-flex size-3 rounded-full bg-gray-500"
-                  ></span>
-                </span>
-                <span>লাইভ কোর্স</span>
-              </div>
-            </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul
-                class="grid gap-2 md:w-[450px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]"
-              >
-                <li class="row-span-4">
-                  <NavigationMenuLink as-child>
-                    <NuxtLink
-                      class="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-4 no-underline outline-hidden select-none focus:shadow-md"
-                      to="/courses"
-                    >
-                      <div
-                        class="mt-4 text-lg font-medium flex items-center gap-2"
-                      >
-                        প্রিমিয়াম কোর্সগুলো
-                        <Icon
-                          name="hugeicons:arrow-up-right-02"
-                          class="text-xl"
-                        />
-                      </div>
-                      <p class="text-muted-foreground text-xs leading-tight">
-                        পরিকল্পিত ও পরিক্ষিত গাইড লাইনের মাধ্যমে আপনার ক্যারিয়ার
-                        গড়তে আমরা থাকবো আপনার সাথে।
-                      </p>
-                    </NuxtLink>
-                  </NavigationMenuLink>
-                </li>
-                <NuxtLink to="/courses/wordpress-web-development">
-                  <NavigationMenuLink to="/courses/wordpress-web-development">
-                    <h1 class="text-sm font-medium">
-                      WordPress Web Development
-                    </h1>
-                    <p class="text-muted-foreground text-xs leading-tight">
-                      ওয়ার্ডপ্রেস দিয়ে আধুনিক ও রেসপন্সিভ ওয়েবসাইট তৈরি শিখুন
-                      সম্পূর্ণ ফ্রিতে।
-                    </p>
-                  </NavigationMenuLink>
-                </NuxtLink>
-                <NuxtLink to="/courses/wordpress-web-development">
-                  <NavigationMenuLink
-                    to="/courses/frontend-web-development-with-vuejs"
-                  >
-                    <h1 class="text-sm font-medium">Vue.js Mastery</h1>
-                    <p class="text-muted-foreground text-xs leading-tight">
-                      ফ্রন্টএন্ডে Vue.js দিয়ে ডাইনামিক ও দ্রুতগতির ওয়েব অ্যাপ
-                      তৈরি করতে শিখুন।
-                    </p>
-                  </NavigationMenuLink>
-                </NuxtLink>
-                <NuxtLink to="/courses/wordpress-web-development">
-                  <NavigationMenuLink
-                    to="/courses/backend-development-with-laravel"
-                  >
-                    <h1 class="text-sm font-medium">Laravel Mastery</h1>
-                    <p class="text-muted-foreground text-xs leading-tight">
-                      ব্যাকএন্ডের জন্য Laravel ব্যবহার করে শক্তিশালী ও স্কেলেবল
-                      ওয়েব অ্যাপ তৈরি করুন।
-                    </p>
-                  </NavigationMenuLink>
-                </NuxtLink>
-                <NuxtLink to="/courses/wordpress-web-development">
-                  <NavigationMenuLink
-                    to="/courses/full-stack-web-app-development"
-                  >
-                    <h1 class="text-sm font-medium">Full-Stack Development</h1>
-                    <p class="text-muted-foreground text-xs leading-tight">
-                      Full-Stack ডেভেলপার হিসেবে নিজের ক্যারিয়ার গড়তে, ৬ মাসের
-                      চ্যালেঞ্জ নিন। AI যুগে নিজেকে এগিয়ে রাখুন।
-                    </p>
-                  </NavigationMenuLink>
-                </NuxtLink>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink as-child>
-              <NuxtLink to="/">প্রতিষ্ঠাতা সম্পর্কে</NuxtLink>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-    </div>
-    <div class="flex items-center space-x-4 hidden sm:block">
-      <NuxtLink to="/auth/login">
-        <Button variant="outline" size="lg">
-          <Icon name="hugeicons:user-03" class="text-base" />
-          <span>লগইন</span>
-        </Button>
+  <!-- Announcement Bar -->
+  <Transition name="slide-down">
+    <div
+      v-if="showAnnouncement"
+      class="bg-black text-white text-xs sm:text-sm py-1.5 sm:py-2 px-1 sm:px-4 relative flex items-center justify-between sm:justify-center gap-3"
+    >
+      <span>
+        <strong>গ্র্যান্ড লঞ্চ অফার</strong> — সকল কোর্সে ৪০% ছাড় পাচ্ছেন!
+      </span>
+      <NuxtLink
+        to="/courses"
+        class="bg-white text-black rounded px-3 py-0.5 text-xs font-semibold hover:opacity-85 transition-opacity"
+      >
+        কোর্স গুলো
       </NuxtLink>
+      <Button
+        size="icon"
+        @click="showAnnouncement = false"
+        class="absolute right-4 text-white/60 hover:text-white transition-colors"
+        aria-label="বন্ধ করুন"
+      >
+        <X class="w-4 h-4" />
+      </Button>
     </div>
+  </Transition>
 
-    <!-- mobile -->
-    <div class="block sm:hidden">
-      <Sheet>
-        <SheetTrigger as-child>
-          <Button size="icon" variant="outline">
-            <Icon name="hugeicons:dashboard-square-01" class="text-lg" />
+  <!-- Main Header -->
+  <header class="sticky top-0 z-50 bg-white border-b h-16 flex items-center">
+    <div
+      class="container mx-auto w-full flex items-center gap-6 justify-between"
+    >
+      <!-- Logo -->
+      <NuxtLink to="/" class="flex items-center gap-2.5 shrink-0">
+        <NuxtImg src="/icon.png" class="w-8 h-8 sm:w-10 sm:h-10" />
+      </NuxtLink>
+
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex flex-1 items-center justify-center">
+        <NavigationMenu>
+          <NavigationMenuList>
+            <!-- Home -->
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                as-child
+                :class="navigationMenuTriggerStyle()"
+              >
+                <NuxtLink
+                  to="/"
+                  class="text-[14.5px] font-medium text-gray-500 hover:text-black transition-colors"
+                >
+                  হোম
+                </NuxtLink>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            <!-- Free Courses -->
+            <NavigationMenuItem>
+              <NavigationMenuTrigger
+                class="text-[14.5px] font-medium text-gray-500 hover:text-black"
+              >
+                ফ্রি কোর্স
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div class="flex gap-2 p-2 w-lg">
+                  <NuxtLink
+                    to="/courses"
+                    class="w-48 shrink-0 bg-gray-50 rounded-lg p-4 flex flex-col justify-end hover:bg-gray-100 transition-colors"
+                  >
+                    <span class="text-2xl mb-2">
+                      <Icon name="hugeicons:play-circle" />
+                    </span>
+                    <p
+                      class="text-[13.5px] font-semibold text-black leading-snug mb-1"
+                    >
+                      সকল ফ্রি কোর্স এক্সপ্লোর করুন
+                    </p>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                      বিনামূল্যে শিখুন, ক্যারিয়ার গড়ুন।
+                    </p>
+                    <span
+                      class="text-xs font-medium text-black mt-3 flex items-center gap-1"
+                    >
+                      দেখুন <ArrowRight class="w-3 h-3" />
+                    </span>
+                  </NuxtLink>
+                  <div class="flex flex-col gap-0.5 flex-1">
+                    <NuxtLink
+                      v-for="course in freeCourses"
+                      :key="course.href"
+                      :to="course.href"
+                      class="flex flex-col gap-0.5 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      <span
+                        class="flex items-center gap-2 text-[13.5px] font-semibold text-black"
+                      >
+                        <Icon :name="course.icon" />
+                        {{ course.title }}
+                        <Badge
+                          v-if="course.badge"
+                          class="bg-black text-white text-[10px] px-1.5 py-0 rounded font-semibold h-auto"
+                        >
+                          {{ course.badge }}
+                        </Badge>
+                      </span>
+                      <span class="text-xs text-gray-400 leading-snug">{{
+                        course.description
+                      }}</span>
+                    </NuxtLink>
+                  </div>
+                </div>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            <!-- Live Courses -->
+            <NavigationMenuItem>
+              <NavigationMenuTrigger
+                class="text-[14.5px] font-medium text-gray-500 hover:text-black"
+              >
+                <div class="flex items-center gap-1.5">
+                  <span class="relative flex h-2 w-2">
+                    <span
+                      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-30"
+                    />
+                    <span
+                      class="relative inline-flex rounded-full h-2 w-2 bg-black"
+                    />
+                  </span>
+                  লাইভ কোর্স
+                </div>
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div class="flex gap-2 p-2 w-lg">
+                  <NuxtLink
+                    to="/courses"
+                    class="w-48 shrink-0 bg-gray-50 rounded-lg p-4 flex flex-col justify-end hover:bg-gray-100 transition-colors"
+                  >
+                    <span class="text-2xl mb-2">
+                      <Icon name="hugeicons:live-streaming-01" />
+                    </span>
+                    <p
+                      class="text-[13.5px] font-semibold text-black leading-snug mb-1"
+                    >
+                      প্রিমিয়াম ক্যারিয়ার ট্র্যাক
+                    </p>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                      পরিকল্পিত গাইডলাইনে আপনার ক্যারিয়ার গড়ুন।
+                    </p>
+                    <span
+                      class="text-xs font-medium text-black mt-3 flex items-center gap-1"
+                    >
+                      দেখুন <ArrowRight class="w-3 h-3" />
+                    </span>
+                  </NuxtLink>
+                  <div class="flex flex-col gap-0.5 flex-1">
+                    <NuxtLink
+                      v-for="course in liveCourses"
+                      :key="course.href"
+                      :to="course.href"
+                      class="flex flex-col gap-0.5 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition-colors"
+                      :class="{
+                        'border-t border-gray-100 mt-1 pt-3': course.badge,
+                      }"
+                    >
+                      <span
+                        class="flex items-center gap-2 text-[13.5px] font-semibold text-black"
+                      >
+                        {{ course.title }}
+                        <Badge
+                          v-if="course.badge"
+                          class="bg-black text-white text-[10px] px-1.5 py-0 rounded font-semibold h-auto"
+                        >
+                          {{ course.badge }}
+                        </Badge>
+                      </span>
+                      <span class="text-xs text-gray-400 leading-snug">{{
+                        course.description
+                      }}</span>
+                    </NuxtLink>
+                  </div>
+                </div>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            <div class="h-5 w-px bg-gray-200 mx-1" />
+
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                as-child
+                :class="navigationMenuTriggerStyle()"
+              >
+                <NuxtLink
+                  to="/about"
+                  class="text-[14.5px] font-medium text-gray-500 hover:text-black"
+                >
+                  প্রতিষ্ঠাতা
+                </NuxtLink>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+
+      <!-- Search (desktop) 
+        <div class="hidden md:flex relative items-center">
+          <Search
+            class="absolute left-3 text-gray-400 w-3.5 h-3.5 pointer-events-none"
+          />
+          <Input
+            placeholder="কোর্স খুঁজুন..."
+            class="pl-9 pr-3 h-9 w-44 focus:w-56 transition-all bg-gray-50 border-transparent focus:border-gray-200 text-sm rounded-lg"
+          />
+        </div>-->
+
+      <!-- Desktop Actions -->
+      <div class="hidden md:flex items-center gap-2">
+        <!--
+          <NuxtLink to="/auth/login">
+            <Button
+              variant="outline"
+              size="sm"
+              class="h-9 gap-1.5 text-[13.5px] font-medium border-gray-200 text-gray-600 hover:text-black hover:bg-gray-50"
+            >
+              <User class="w-3.5 h-3.5" />
+              লগইন
+            </Button>
+          </NuxtLink>-->
+        <NuxtLink to="/courses">
+          <Button size="lg" class="">
+            শুরু করুন
+            <ArrowRight class="w-3.5 h-3.5" />
           </Button>
-        </SheetTrigger>
-        <SheetContent
-          class="w-[90%] h-[95dvh] top-5 right-3.5 rounded-2xl max-w-none"
-        >
-          <SheetHeader>
-            <SheetTitle
-              ><Icon name="hugeicons:home-13" clsas="text-lg"
-            /></SheetTitle>
-            <SheetDescription>
-              Make changes to your profile here. Click save when you're done.
-            </SheetDescription>
-          </SheetHeader>
-          <div class="grid flex-1 auto-rows-min gap-6 px-4"></div>
-          <SheetFooter>
-            <SheetClose as-child>
-              <Button variant="outline"> Close </Button>
-            </SheetClose>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
+        </NuxtLink>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="flex md:hidden">
+        <Sheet>
+          <SheetTrigger as-child>
+            <Button
+              variant="outline"
+              size="icon"
+              class="w-9 h-9 border-gray-200"
+            >
+              <Menu class="w-4 h-4" />
+            </Button>
+          </SheetTrigger>
+
+          <SheetContent
+            side="right"
+            class="w-[88%] max-w-sm h-[calc(100dvh-20px)] top-2.5 right-2.5 rounded-2xl border border-gray-100 p-0 flex flex-col"
+          >
+            <SheetHeader class="px-5 py-4 border-b border-gray-100">
+              <SheetTitle class="flex items-center gap-2.5">
+                <NuxtImg src="/icon.png" class="w-8 h-8" />
+              </SheetTitle>
+              <SheetDescription class="sr-only">নেভিগেশন মেনু</SheetDescription>
+            </SheetHeader>
+
+            <div class="flex-1 overflow-y-auto px-4">
+              <template v-for="(section, si) in mobileNavSections" :key="si">
+                <p
+                  class="text-[10.5px] font-semibold text-gray-400 uppercase tracking-widest mb-1.5 px-2"
+                >
+                  {{ section.label }}
+                </p>
+                <SheetClose
+                  as-child
+                  v-for="item in section.items"
+                  :key="item.href"
+                >
+                  <NuxtLink
+                    :to="item.href"
+                    class="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-medium text-gray-700 hover:bg-gray-50 hover:text-black transition-colors"
+                  >
+                    <span
+                      class="w-6 h-6 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0"
+                    >
+                      <Icon
+                        v-if="item.icon"
+                        :name="item.icon"
+                        class="w-4 h-4"
+                      />
+                    </span>
+                    <span class="text-xs"> {{ item.title }}</span>
+                    <Badge
+                      v-if="item.badge"
+                      class="ml-auto bg-black text-white text-[10px] px-2 py-0 h-auto font-semibold rounded"
+                    >
+                      {{ item.badge }}
+                    </Badge>
+                  </NuxtLink>
+                </SheetClose>
+              </template>
+            </div>
+
+            <SheetFooter
+              class="p-4 border-t border-gray-100 flex gap-2 sm:flex-row"
+            >
+              <SheetClose as-child>
+                <NuxtLink to="/auth/login" class="flex-1">
+                  <Button
+                    variant="outline"
+                    class="w-full border-gray-200 text-gray-600 font-medium text-[14px] h-10"
+                  >
+                    লগইন
+                  </Button>
+                </NuxtLink>
+              </SheetClose>
+              <SheetClose as-child>
+                <NuxtLink to="/courses" class="flex-1">
+                  <Button
+                    class="w-full bg-black text-white font-semibold text-[14px] h-10 hover:bg-gray-800"
+                  >
+                    শুরু করুন →
+                  </Button>
+                </NuxtLink>
+              </SheetClose>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
+      </div>
     </div>
-  </div>
+  </header>
 </template>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap");
+
+.font-siliguri {
+  font-family: "Hind Siliguri", sans-serif;
+}
+
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.25s ease;
+}
+.slide-down-enter-from,
+.slide-down-leave-to {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+</style>
