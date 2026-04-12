@@ -145,7 +145,9 @@ const mobileNavSections = [
   </Transition>
 
   <!-- Main Header -->
-  <header class="sticky top-0 z-50 bg-white border-b h-16 flex items-center">
+  <header
+    class="sticky top-0 z-50 bg-white border-b h-16 px-1.5 sm:px-0 flex items-center"
+  >
     <div
       class="container mx-auto w-full flex items-center gap-6 justify-between"
     >
@@ -401,7 +403,7 @@ const mobileNavSections = [
                         class="w-4 h-4"
                       />
                     </span>
-                    <span class="text-xs"> {{ item.title }}</span>
+                    <span class="text-sm"> {{ item.title }}</span>
                     <Badge
                       v-if="item.badge"
                       class="ml-auto bg-black text-white text-[10px] px-2 py-0 h-auto font-semibold rounded"
