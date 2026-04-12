@@ -20,22 +20,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowRight,
-  Search,
-  User,
-  Menu,
-  Home,
-  BookOpen,
-  Rss,
-  Globe,
-  Zap,
-  Flame,
-  Rocket,
-  Monitor,
-  Settings,
-  X,
-} from "lucide-vue-next";
+import { ArrowRight, Menu, X } from "lucide-vue-next";
 import { Badge } from "../ui/badge";
 
 const showAnnouncement = ref(true);
@@ -122,7 +107,7 @@ const mobileNavSections = [
   <Transition name="slide-down">
     <div
       v-if="showAnnouncement"
-      class="bg-black text-white text-xs sm:text-sm py-1.5 sm:py-2 px-1 sm:px-4 relative flex items-center justify-between sm:justify-center gap-3"
+      class="bg-black text-white text-xs sm:text-sm py-1.5 sm:py-2 px-1 sm:px-4 relative flex items-center justify-left sm:justify-center gap-3"
     >
       <span>
         <strong>গ্র্যান্ড লঞ্চ অফার</strong> — সকল কোর্সে ৪০% ছাড় পাচ্ছেন!
@@ -146,7 +131,7 @@ const mobileNavSections = [
 
   <!-- Main Header -->
   <header
-    class="sticky top-0 z-50 bg-white border-b h-16 px-1.5 sm:px-0 flex items-center"
+    class="sticky top-0 z-50 bg-white border-b h-16 px-1.5 sm:px-2 flex items-center"
   >
     <div
       class="container mx-auto w-full flex items-center gap-6 justify-between"
@@ -239,15 +224,7 @@ const mobileNavSections = [
                 class="text-[14.5px] font-medium text-gray-500 hover:text-black"
               >
                 <div class="flex items-center gap-1.5">
-                  <span class="relative flex h-2 w-2">
-                    <span
-                      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-30"
-                    />
-                    <span
-                      class="relative inline-flex rounded-full h-2 w-2 bg-black"
-                    />
-                  </span>
-                  লাইভ কোর্স
+                  <Pulse /> লাইভ কোর্স
                 </div>
               </NavigationMenuTrigger>
               <NavigationMenuContent>
